@@ -27,8 +27,10 @@
 <!-- AB Testing Logic -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+	    console.log("DOM fully loaded and script running!");
             // Assign A or B variant randomly
             const abVariant = Math.random() < 0.5 ? 'A' : 'B';
+	    console.log("abVariant:", abVariant);
 
             const recruiterBtn = document.getElementById('recruiter-btn');
             const jobseekerBtn = document.getElementById('jobseeker-btn');
