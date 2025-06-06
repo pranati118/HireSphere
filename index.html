@@ -24,36 +24,39 @@
     })
 </script>
 
-<script>
-  // Assign A or B variant randomly
-  const abVariant = Math.random() < 0.5 ? 'A' : 'B';
+<!-- AB Testing Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Assign A or B variant randomly
+            const abVariant = Math.random() < 0.5 ? 'A' : 'B';
 
-  const recruiterBtn = document.getElementById('recruiter-btn');
-  const jobseekerBtn = document.getElementById('jobseeker-btn');
+            const recruiterBtn = document.getElementById('recruiter-btn');
+            const jobseekerBtn = document.getElementById('jobseeker-btn');
 
-  // Modify text based on variant
-  if (abVariant === 'A') {
-    recruiterBtn.innerHTML = '<i aria-hidden="true" class="far fa-building"></i>Recruiter';
-    jobseekerBtn.innerHTML = '<i aria-hidden="true" class="far fa-user"></i>Job Seeker';
-  } else {
-    recruiterBtn.innerHTML = '<i aria-hidden="true" class="far fa-building"></i>Hire Talent';
-    jobseekerBtn.innerHTML = '<i aria-hidden="true" class="far fa-user"></i>Find a Job';
-  }
+            // Modify text based on variant
+            if (abVariant === 'A') {
+                recruiterBtn.innerHTML = '<i aria-hidden="true" class="far fa-building"></i>Recruiter';
+                jobseekerBtn.innerHTML = '<i aria-hidden="true" class="far fa-user"></i>Job Seeker';
+            } else {
+                recruiterBtn.innerHTML = '<i aria-hidden="true" class="far fa-building"></i>Hire Talent';
+                jobseekerBtn.innerHTML = '<i aria-hidden="true" class="far fa-user"></i>Find a Job';
+            }
 
-  // Track which variant was shown
-  posthog.capture('Homepage Button AB Test', {
-    variant: abVariant
-  });
+            // Track which variant was shown
+            posthog.capture('Homepage Button AB Test', {
+                variant: abVariant
+            });
 
-  // Track button clicks
-  recruiterBtn.addEventListener('click', () => {
-    posthog.capture('Recruiter Button Clicked', { variant: abVariant });
-  });
+            // Track button clicks
+            recruiterBtn.addEventListener('click', () => {
+                posthog.capture('Recruiter Button Clicked', { variant: abVariant });
+            });
 
-  jobseekerBtn.addEventListener('click', () => {
-    posthog.capture('Job Seeker Button Clicked', { variant: abVariant });
-  });
-</script>
+            jobseekerBtn.addEventListener('click', () => {
+                posthog.capture('Job Seeker Button Clicked', { variant: abVariant });
+            });
+        });
+    </script>
 
 	
 	<script type="text/javascript">
