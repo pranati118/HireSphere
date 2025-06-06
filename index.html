@@ -24,6 +24,38 @@
     })
 </script>
 
+<script>
+  // Assign A or B variant randomly
+  const abVariant = Math.random() < 0.5 ? 'A' : 'B';
+
+  const recruiterBtn = document.getElementById('recruiter-btn');
+  const jobseekerBtn = document.getElementById('jobseeker-btn');
+
+  // Modify text based on variant
+  if (abVariant === 'A') {
+    recruiterBtn.innerHTML = '<i aria-hidden="true" class="far fa-building"></i>Recruiter';
+    jobseekerBtn.innerHTML = '<i aria-hidden="true" class="far fa-user"></i>Job Seeker';
+  } else {
+    recruiterBtn.innerHTML = '<i aria-hidden="true" class="far fa-building"></i>Hire Talent';
+    jobseekerBtn.innerHTML = '<i aria-hidden="true" class="far fa-user"></i>Find a Job';
+  }
+
+  // Track which variant was shown
+  posthog.capture('Homepage Button AB Test', {
+    variant: abVariant
+  });
+
+  // Track button clicks
+  recruiterBtn.addEventListener('click', () => {
+    posthog.capture('Recruiter Button Clicked', { variant: abVariant });
+  });
+
+  jobseekerBtn.addEventListener('click', () => {
+    posthog.capture('Job Seeker Button Clicked', { variant: abVariant });
+  });
+</script>
+
+	
 	<script type="text/javascript">
   window.heapReadyCb=window.heapReadyCb||[],window.heap=window.heap||[],heap.load=function(e,t){window.heap.envId=e,window.heap.clientConfig=t=t||{},window.heap.clientConfig.shouldFetchServerConfig=!1;var a=document.createElement("script");a.type="text/javascript",a.async=!0,a.src="https://cdn.us.heap-api.com/config/"+e+"/heap_config.js";var r=document.getElementsByTagName("script")[0];r.parentNode.insertBefore(a,r);var n=["init","startTracking","stopTracking","track","resetIdentity","identify","getSessionId","getUserId","getIdentity","addUserProperties","addEventProperties","removeEventProperty","clearEventProperties","addAccountProperties","addAdapter","addTransformer","addTransformerFn","onReady","addPageviewProperties","removePageviewProperty","clearPageviewProperties","trackPageview"],i=function(e){return function(){var t=Array.prototype.slice.call(arguments,0);window.heapReadyCb.push({name:e,fn:function(){heap[e]&&heap[e].apply(heap,t)}})}};for(var p=0;p<n.length;p++)heap[n[p]]=i(n[p])};
   heap.load("2990134104");
@@ -3810,7 +3842,7 @@
                                         <div class="ekit-wid-con">
                                             <div class="ekit-btn-wraper">
                                                 <a href="post-a-job/index.html"
-                                                    class="elementskit-btn  whitespace--normal" id="">
+                                                    class="elementskit-btn  whitespace--normal" id="recruiter-btn">
                                                     <i aria-hidden="true" class="far fa-building"></i>Recruiter</a>
                                             </div>
                                         </div>
@@ -3828,7 +3860,7 @@
                                         <div class="ekit-wid-con">
                                             <div class="ekit-btn-wraper">
                                                 <a href="post-your-resume/index.html"
-                                                    class="elementskit-btn  whitespace--normal" id="">
+                                                    class="elementskit-btn  whitespace--normal" id="jobseeker-btn">
                                                     <i aria-hidden="true" class="far fa-user"></i>Job Seeker</a>
                                             </div>
                                         </div>
