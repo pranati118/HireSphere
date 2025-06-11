@@ -26,39 +26,59 @@
 
 <!-- AB Testing Logic -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-	    console.log("DOM fully loaded and script running!");
-            // Assign A or B variant randomly
-            const abVariant = Math.random() < 0.5 ? 'A' : 'B';
-	    console.log("abVariant:", abVariant);
+    document.addEventListener('DOMContentLoaded', function () {
+        console.log("DOM fully loaded and script running!");
 
-            const recruiterBtn = document.getElementById('recruiter-btn');
-            const jobseekerBtn = document.getElementById('jobseeker-btn');
+        // Button A/B Variant
+        const abVariant = Math.random() < 0.5 ? 'A' : 'B';
+        console.log("Button Variant:", abVariant);
 
-            // Modify text based on variant
-            if (abVariant === 'A') {
-                recruiterBtn.innerHTML = '<i aria-hidden="true" class="far fa-building"></i>Recruiter';
-                jobseekerBtn.innerHTML = '<i aria-hidden="true" class="far fa-user"></i>Job Seeker';
-            } else {
-                recruiterBtn.innerHTML = '<i aria-hidden="true" class="far fa-building"></i>Hire Talent';
-                jobseekerBtn.innerHTML = '<i aria-hidden="true" class="far fa-user"></i>Find a Job';
-            }
+        const recruiterBtn = document.getElementById('recruiter-btn');
+        const jobseekerBtn = document.getElementById('jobseeker-btn');
 
-            // Track which variant was shown
-            posthog.capture('Homepage Button AB Test', {
-                variant: abVariant
-            });
+        if (abVariant === 'A') {
+            recruiterBtn.innerHTML = '<i aria-hidden="true" class="far fa-building"></i> Recruiter';
+            jobseekerBtn.innerHTML = '<i aria-hidden="true" class="far fa-user"></i> Job Seeker';
+        } else {
+            recruiterBtn.innerHTML = '<i aria-hidden="true" class="far fa-building"></i> Hire Talent';
+            jobseekerBtn.innerHTML = '<i aria-hidden="true" class="far fa-user"></i> Find a Job';
+        }
 
-            // Track button clicks
-            recruiterBtn.addEventListener('click', () => {
-                posthog.capture('Recruiter Button Clicked', { variant: abVariant });
-            });
-
-            jobseekerBtn.addEventListener('click', () => {
-                posthog.capture('Job Seeker Button Clicked', { variant: abVariant });
-            });
+        posthog.capture('Homepage Button AB Test', {
+            variant: abVariant
         });
-    </script>
+
+        recruiterBtn.addEventListener('click', () => {
+            posthog.capture('Recruiter Button Clicked', { variant: abVariant });
+        });
+
+        jobseekerBtn.addEventListener('click', () => {
+            posthog.capture('Job Seeker Button Clicked', { variant: abVariant });
+        });
+
+        // Sticky vs Static Header A/B Test
+        const headerVariant = Math.random() < 0.5 ? 'Sticky' : 'Static';
+        console.log("Header Variant:", headerVariant);
+
+        // Target your header section
+        const headerSection = document.querySelector('.header-section');
+
+        if (headerVariant === 'Sticky') {
+            headerSection.style.position = 'sticky';
+            headerSection.style.top = '0';
+            headerSection.style.zIndex = '1000';
+            headerSection.style.backgroundColor = '#fff'; // optional: make visible
+            headerSection.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)'; // optional: add shadow for visibility
+        } else {
+            headerSection.style.position = 'static';
+            headerSection.style.boxShadow = 'none';
+        }
+
+        posthog.capture('Header Variant Test', {
+            headerVariant: headerVariant
+        });
+    });
+</script>
 
 	
 	<script type="text/javascript">
