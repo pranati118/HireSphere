@@ -29,45 +29,27 @@
     document.addEventListener('DOMContentLoaded', function () {
         console.log("DOM fully loaded and script running!");
 
-        // Button A/B Variant (keep as is)
-        const abVariant = Math.random() < 0.5 ? 'A' : 'B';
-        console.log("Button Variant:", abVariant);
-
-        const recruiterBtn = document.getElementById('recruiter-btn');
-        const jobseekerBtn = document.getElementById('jobseeker-btn');
-
-        if (abVariant === 'A') {
-            recruiterBtn.innerHTML = '<i aria-hidden="true" class="far fa-building"></i> Recruiter';
-            jobseekerBtn.innerHTML = '<i aria-hidden="true" class="far fa-user"></i> Job Seeker';
-        } else {
-            recruiterBtn.innerHTML = '<i aria-hidden="true" class="far fa-building"></i> Hire Talent';
-            jobseekerBtn.innerHTML = '<i aria-hidden="true" class="far fa-user"></i> Find a Job';
-        }
-
-        posthog.capture('Homepage Button AB Test', {
-            variant: abVariant
-        });
-
-        recruiterBtn.addEventListener('click', () => {
-            posthog.capture('Recruiter Button Clicked', { variant: abVariant });
-        });
-
-        jobseekerBtn.addEventListener('click', () => {
-            posthog.capture('Job Seeker Button Clicked', { variant: abVariant });
-        });
-
-        // Header Background Color A/B Test
+        // A/B Test for Header Background
         const headerColorVariant = Math.random() < 0.5 ? 'Light' : 'Dark';
         console.log("Header Color Variant:", headerColorVariant);
 
         const headerSection = document.querySelector('.header-section');
+        const menuLinks = document.querySelectorAll('.header-section a, .header-section .menu-link, .header-section .elementskit-btn');
 
         if (headerColorVariant === 'Light') {
             headerSection.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
             headerSection.style.color = '#000';
+            // Adjust text color to black for contrast
+            menuLinks.forEach(link => {
+                link.style.color = '#000';
+            });
         } else {
             headerSection.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
             headerSection.style.color = '#fff';
+            // Adjust text color to white for contrast
+            menuLinks.forEach(link => {
+                link.style.color = '#fff';
+            });
         }
 
         posthog.capture('Header Color Variant Test', {
@@ -75,6 +57,7 @@
         });
     });
 </script>
+
 
 
 	
