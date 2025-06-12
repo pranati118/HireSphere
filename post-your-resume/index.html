@@ -4015,31 +4015,24 @@
     </form>
 
     <script>
-        document.getElementById('applicationForm').addEventListener('submit', function(event) {
-            event.preventDefault();
+document.getElementById('applicationForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    // Get form values
+    const name = document.getElementById('name').value.trim();
+    const skills = document.getElementById('skills').value.trim();
+    const location = document.getElementById('location').value.trim();
+    const experience = document.getElementById('experience').value.trim();
 
-            const formData = {
-                name: document.getElementById('name').value,
-                skills: document.getElementById('skills').value,
-                location: document.getElementById('location').value,
-                experience: document.getElementById('experience').value
-            };
-            fetch('http://localhost:3001/submit-application', {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(formData)
-          })
-          .then(response => response.json())
-          .then(data => {
-              alert(`${data.message} ${data.confirmation}`);
-          })
-          .catch(error => {
-              console.error('Error:', error);
-          });
-      });
-  </script>
+    // Simple validation
+    if (!name || !skills || !location || !experience) {
+        alert('Please fill in all fields.');
+        return;
+    }
+
+    // Redirect to JobApplications.html (relative path)
+    window.location.href = "JobApplications.html";
+});
+</script>
                           </div>
                         </div>
                       </div>
